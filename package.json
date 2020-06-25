@@ -1,0 +1,9 @@
+{
+  "name": "mumimal",
+  "version": "0.0.1",
+  "description": "Mumimal is a mumi minimal blog generator.",
+  "main": "index.js",
+  "author": "wabilin",
+  "license": "MIT",
+  "private": false
+}
