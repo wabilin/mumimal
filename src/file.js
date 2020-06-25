@@ -18,6 +18,13 @@ function readFile(filePath) {
 
 /**
  * @param {string} filePath
+ */
+function readFileSync(filePath) {
+  return fs.readFileSync(filePath, { encoding: 'utf-8' })
+}
+
+/**
+ * @param {string} filePath
  * @param {string} content
  * @returns {Promise<void>}
  */
@@ -50,8 +57,26 @@ function readDir(dirPath) {
   })
 }
 
+/**
+ * @param {string} dirPath
+ * @returns {Promise<void>}
+ */
+function mkdir(dirPath) {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(dirPath, { recursive: true }, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve()
+      }
+    });
+  })
+}
+
 module.exports = {
   readFile,
+  readFileSync,
   writeFile,
   readDir,
+  mkdir,
 }
