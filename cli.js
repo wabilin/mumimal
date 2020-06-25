@@ -1,6 +1,9 @@
 #!/usr/bin/env node
-function mumi() {
-  console.log('mumi!')
+
+const { parsePosts } = require('./src/parsePosts')
+
+async function mumi() {
+  return parsePosts()
 }
 
 mumi()
