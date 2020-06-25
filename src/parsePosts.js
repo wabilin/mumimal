@@ -48,6 +48,28 @@ function writePost(meta, mdContent) {
 }
 
 /**
+ *
+ * @param {string} postName
+ * @param {Object} data
+ */
+function buildMeta(postName, data) {
+  const tags = (data.tags || '').split(',').map(x => x.trim())
+
+  const meta = {
+    ...data,
+    tags,
+    postName,
+  }
+
+  const dateMatch = postName.match(/^\d+-\d+-\d+/)
+  if (dateMatch) {
+    meta.dateStr = dateMatch[0]
+  }
+
+  return meta
+}
+
+/**
  * parse posts, write html to dist
  * @returns {Promise<object[]>} - all meta data
  */
@@ -64,10 +86,8 @@ async function parsePosts() {
 
     const { data, content } = matter.read(filePath)
 
-    const meta = {
-      ...data,
-      postName,
-    }
+
+    const meta = buildMeta(postName, data)
 
     writePost(meta, content)
     allMeta.push(meta)

@@ -4,8 +4,10 @@ const { PWD } = process.env
 const POSTS_PATH = path.join(PWD, 'posts')
 const LAYOUTS_PATH = path.join(PWD, 'layouts')
 const POST_LAYOUT_PATH = path.join(LAYOUTS_PATH, 'post.ejs')
+const INDEX_LAYOUT_PATH = path.join(LAYOUTS_PATH, 'index.ejs')
 
 const DIST_PATH = path.join(PWD, 'dist')
+const DIST_INDEX_PATH = path.join(DIST_PATH, 'index.html')
 
 /**
  * @param {*} filename
@@ -19,7 +21,9 @@ function postDistPath(filename) {
 module.exports = {
   POSTS_PATH,
   LAYOUTS_PATH,
+  INDEX_LAYOUT_PATH,
   POST_LAYOUT_PATH,
   DIST_PATH,
+  DIST_INDEX_PATH,
   postDistPath,
 }

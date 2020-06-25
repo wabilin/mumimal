@@ -1,2 +1,5 @@
-function main() { }
-module.exports = { main }
+const { Mumimal } = require('./src/Mumimal')
+
+module.exports = {
+  Mumimal
+}

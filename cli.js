@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
-const { parsePosts } = require('./src/parsePosts')
+const { Mumimal } = require('./src/Mumimal')
 
 async function mumi() {
-  return parsePosts()
+  const mumimal = new Mumimal({})
+  return mumimal.run()
 }
 
 mumi()
