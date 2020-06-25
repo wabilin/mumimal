@@ -8,5 +8,9 @@
   },
   "author": "wabilin",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "gray-matter": "^4.0.2",
+    "marked": "^1.1.0"
+  }
 }
