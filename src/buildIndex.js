@@ -5,8 +5,8 @@ const ejs = require('ejs')
 const { INDEX_LAYOUT_PATH, DIST_INDEX_PATH } = require('./paths')
 const { writeFile } = require('./file')
 
-function buildIndex(mumimal) {
-  const { config, posts } = mumimal
+function buildIndex(context) {
+  const { config, posts } = context
 
   const { site, ejsOption } = config
 

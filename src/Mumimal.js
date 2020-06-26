@@ -12,22 +12,22 @@ const DEFAULT_CONFIG = {
   }
 }
 
-class Mumimal {
-  constructor(config = {}) {
-    this.config = {
-      ...DEFAULT_CONFIG,
-      ...config
-    }
-    this.posts = []
+async function mumimal(userConfig = {}) {
+  const config = {
+    ...DEFAULT_CONFIG,
+    ...userConfig,
   }
 
-  async run() {
-    await copyStatic()
-    this.posts = await parsePosts()
-    await buildIndex(this)
+  await copyStatic()
+  const posts = await parsePosts()
+
+  const context = {
+    config,
+    posts
   }
+  await buildIndex(context)
 }
 
 module.exports = {
-  Mumimal
+  mumimal
 }

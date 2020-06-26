@@ -1,10 +1,9 @@
 #!/usr/bin/env node
 
-const { Mumimal } = require('./src/Mumimal')
+const { mumimal } = require('./src/mumimal')
 
 async function mumi() {
-  const mumimal = new Mumimal({})
-  return mumimal.run()
+  return mumimal()
 }
 
 mumi().catch(err => console.log(err))
