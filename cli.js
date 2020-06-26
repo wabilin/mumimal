@@ -7,4 +7,4 @@ async function mumi() {
   return mumimal.run()
 }
 
-mumi()
+mumi().catch(err => console.log(err))

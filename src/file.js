@@ -1,4 +1,5 @@
 const fs = require('fs')
+const { exec } = require("child_process");
 
 /**
  * @param {string} filePath
@@ -73,7 +74,30 @@ function mkdir(dirPath) {
   })
 }
 
+/**
+ * @param {string} src
+ * @param {string} dist
+ */
+function copyRecursive(src, dist) {
+  return new Promise((resolve, reject) => {
+    exec(`cp -r ${src} ${dist}`, (error, stdout, stderr) => {
+      if (error) {
+        return reject(error)
+      }
+
+      if (stderr) {
+        return reject(stderr);
+      }
+
+      if (!error && ! stderr) {
+        resolve(stdout)
+      }
+    });
+  })
+};
+
 module.exports = {
+  copyRecursive,
   readFile,
   readFileSync,
   writeFile,

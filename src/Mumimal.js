@@ -2,8 +2,8 @@
 
 const { parsePosts } = require('./parsePosts')
 const { buildIndex } = require('./buildIndex')
+const { copyStatic } = require('./copyStatic')
 
-/** @type {Mumi.Config} */
 const DEFAULT_CONFIG = {
   site: {
     name: "",
@@ -12,7 +12,6 @@ const DEFAULT_CONFIG = {
   }
 }
 
-/** @type {Mumi.Mumimal} */
 class Mumimal {
   constructor(config = {}) {
     this.config = {
@@ -23,8 +22,9 @@ class Mumimal {
   }
 
   async run() {
+    await copyStatic()
     this.posts = await parsePosts()
-    buildIndex(this)
+    await buildIndex(this)
   }
 }
 
