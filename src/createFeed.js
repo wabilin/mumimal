@@ -24,6 +24,13 @@ const { writeFile } = require('./file')
     ...feedConfig,
   });
 
+  const { categories } = feedConfig
+  if (categories) {
+    categories.forEach(category => {
+      feed.addCategory(category)
+    })
+  }
+
   posts.slice(0, 10).forEach(post => {
     const { postName, title, description, dateStr } = post
     const { content } = readPostSrc(postName)

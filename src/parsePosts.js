@@ -61,10 +61,12 @@ function writePost(meta, content) {
  */
 function buildMeta(postName, data) {
   const tags = (data.tags || '').split(',').map(x => x.trim())
+  const link = postName.replace(/\.md$/, '.html')
 
   const meta = {
     ...data,
     tags,
+    link,
     postName,
   }
 

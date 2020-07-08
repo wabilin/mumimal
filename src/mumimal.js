@@ -48,16 +48,39 @@ const DEFAULT_CONFIG = {
  */
 
 /**
+ * @param {Object} userConfig
+ * @returns {Config}
+ */
+function mergeConfig(userConfig) {
+  const {
+    site = {},
+    ejsOption = {},
+    feed = {},
+   } = userConfig
+
+   return {
+     site: {
+       ...DEFAULT_CONFIG.site,
+       ...site,
+     },
+     ejsOption: {
+       ...DEFAULT_CONFIG.ejsOption,
+       ...ejsOption,
+     },
+     feed: {
+       ...DEFAULT_CONFIG.feed,
+       ...feed,
+     },
+   }
+}
+
+/**
  * @typedef {Object} Context
  * @property {Config} config
  * @property {PostMeta[]} posts
  */
-
 async function mumimal(userConfig = {}) {
-  const config = {
-    ...DEFAULT_CONFIG,
-    ...userConfig,
-  }
+  const config = mergeConfig(userConfig)
 
   const timeStart = Date.now()
   console.log('mumimal started')
