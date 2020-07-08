@@ -82,29 +82,14 @@ function mergeConfig(userConfig) {
 async function mumimal(userConfig = {}) {
   const config = mergeConfig(userConfig)
 
-  const timeStart = Date.now()
-  console.log('mumimal started')
-
   await copyStatic()
   const posts = await parsePosts()
 
-  const paredPostsDone = Date.now()
-  console.log(`${posts.length} posts created (${paredPostsDone - timeStart} ms)`)
-
   /** @type {Context} */
-  const context = {
-    config,
-    posts
-  }
+  const context = { config, posts }
   await buildIndex(context)
 
-  const indexDone = Date.now()
-  console.log(`index created (${indexDone - paredPostsDone} ms)`)
-
   await createFeed(context)
-
-  const feedDone = Date.now()
-  console.log(`feed created (${feedDone - indexDone} ms)`)
 }
 
 module.exports = {
