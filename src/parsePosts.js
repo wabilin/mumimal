@@ -1,10 +1,9 @@
 const ejs = require('ejs');
-const path = require('path')
 const marked = require('marked')
 const matter = require('gray-matter');
 
 const { readDir, mkdir, readFileSync, writeFile } = require('./file')
-const { POSTS_PATH, POST_LAYOUT_PATH, DIST_PATH, postDistPath } = require('./paths')
+const { POSTS_PATH, POST_LAYOUT_PATH, DIST_PATH, postSrcPath, postDistPath } = require('./paths')
 
 const EJS_OPTIONS = {
   rmWhitespace: true
@@ -28,16 +27,23 @@ function postTemplate() {
 }
 
 /**
+ * @typedef {Object} PostMeta
+ * @property {string} title
+ * @property {string} postName
+ * @property {string[]} tags
+ * @property {string} [dataStr]
+ */
+
+/**
  *
- * @param {Object} meta
+ * @param {PostMeta} meta
  * @param {string} meta.title
  * @param {string} meta.postName
- * @param {string} mdContent
+ * @param {string} content
  */
-function writePost(meta, mdContent) {
+function writePost(meta, content) {
   const { postName } = meta
   const template = postTemplate()
-  const content = marked(mdContent)
   const rendered = template({
     content,
     meta,
@@ -51,6 +57,7 @@ function writePost(meta, mdContent) {
  *
  * @param {string} postName
  * @param {Object} data
+ * @returns {PostMeta}
  */
 function buildMeta(postName, data) {
   const tags = (data.tags || '').split(',').map(x => x.trim())
@@ -70,25 +77,34 @@ function buildMeta(postName, data) {
 }
 
 /**
+ * @param {string} postName
+ */
+function readPostSrc(postName) {
+  const filePath = postSrcPath(postName)
+
+  const { data, content: mdContent } = matter.read(filePath)
+  const meta = buildMeta(postName, data)
+  const content = marked(mdContent)
+
+  return { meta, content }
+}
+
+/**
  * parse posts, write html to dist
- * @returns {Promise<object[]>} - all meta data
+ * @returns {Promise<PostMeta[]>} - all meta data
  */
 async function parsePosts() {
   const filenames = await readDir(POSTS_PATH)
 
-  const postNames = filenames.filter(name => name.match(/.md$/))
+  const postNames = filenames
+    .filter(name => name.match(/.md$/))
+    .sort((a, b) => a.localeCompare(b) * -1)
 
   await mkdir(DIST_PATH)
 
   const allMeta = []
   postNames.forEach(postName => {
-    const filePath = path.join(POSTS_PATH, postName)
-
-    const { data, content } = matter.read(filePath)
-
-
-    const meta = buildMeta(postName, data)
-
+    const { meta, content } = readPostSrc(postName)
     writePost(meta, content)
     allMeta.push(meta)
   })
@@ -97,5 +113,6 @@ async function parsePosts() {
 }
 
 module.exports = {
-  parsePosts
+  readPostSrc,
+  parsePosts,
 }

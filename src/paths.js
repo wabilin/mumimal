@@ -9,6 +9,14 @@ const INDEX_LAYOUT_PATH = path.join(LAYOUTS_PATH, 'index.ejs')
 
 const DIST_PATH = path.join(PWD, 'dist')
 const DIST_INDEX_PATH = path.join(DIST_PATH, 'index.html')
+const DIST_FEED_PATH = path.join(DIST_PATH, 'feed.xml')
+
+/**
+ * @param {*} filename
+ */
+function postSrcPath(filename) {
+  return path.join(POSTS_PATH, filename)
+}
 
 /**
  * @param {*} filename
@@ -27,5 +35,7 @@ module.exports = {
   POST_LAYOUT_PATH,
   DIST_PATH,
   DIST_INDEX_PATH,
+  DIST_FEED_PATH,
+  postSrcPath,
   postDistPath,
 }
