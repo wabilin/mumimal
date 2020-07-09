@@ -1,6 +1,7 @@
 const ejs = require('ejs');
 const marked = require('marked')
 const matter = require('gray-matter');
+const { minify } = require('html-minifier-terser');
 
 const { readDir, mkdir, readFileSync, writeFile } = require('./file')
 const { POSTS_PATH, POST_LAYOUT_PATH, DIST_PATH, postSrcPath, postDistPath } = require('./paths')
@@ -41,13 +42,16 @@ function postTemplate() {
  * @param {string} meta.postName
  * @param {string} content
  */
-function writePost(meta, content) {
+function writePost(meta, content, config) {
   const { postName } = meta
   const template = postTemplate()
-  const rendered = template({
+  let rendered = template({
     content,
     meta,
   })
+  if (config.build.minify) {
+    rendered = minify(rendered, config.build.minifyOption)
+  }
 
   const distPath = postDistPath(postName)
   writeFile(distPath, rendered).catch(err => console.error(err))
@@ -95,7 +99,7 @@ function readPostSrc(postName) {
  * parse posts, write html to dist
  * @returns {Promise<PostMeta[]>} - all meta data
  */
-async function parsePosts() {
+async function parsePosts(config) {
   const filenames = await readDir(POSTS_PATH)
 
   const postNames = filenames
@@ -107,7 +111,7 @@ async function parsePosts() {
   const allMeta = []
   postNames.forEach(postName => {
     const { meta, content } = readPostSrc(postName)
-    writePost(meta, content)
+    writePost(meta, content, config)
     allMeta.push(meta)
   })
 

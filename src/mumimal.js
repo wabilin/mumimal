@@ -17,6 +17,15 @@ const DEFAULT_CONFIG = {
     title: "",
     description: "",
     author: "",
+  },
+  build: {
+    minify: process.env.NODE_ENV === 'production',
+    minifyOption: {
+        html5: true,
+        collapseWhitespace: true,
+        minifyJS: true,
+        removeAttributeQuotes: true,
+    }
   }
 }
 
@@ -41,6 +50,7 @@ const DEFAULT_CONFIG = {
  * @property {Site} site
  * @property {Feed} feed
  * @property {Object} [ejsOption]
+ * @property {Object} [build]
  */
 
 /**
@@ -56,6 +66,7 @@ function mergeConfig(userConfig) {
     site = {},
     ejsOption = {},
     feed = {},
+    build = {},
    } = userConfig
 
    return {
@@ -71,6 +82,10 @@ function mergeConfig(userConfig) {
        ...DEFAULT_CONFIG.feed,
        ...feed,
      },
+     build: {
+       ...DEFAULT_CONFIG.build,
+       ...build,
+     },
    }
 }
 
@@ -83,7 +98,7 @@ async function mumimal(userConfig = {}) {
   const config = mergeConfig(userConfig)
 
   await copyStatic()
-  const posts = await parsePosts()
+  const posts = await parsePosts(config)
 
   /** @type {Context} */
   const context = { config, posts }
