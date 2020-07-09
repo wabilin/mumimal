@@ -21,11 +21,12 @@ const DEFAULT_CONFIG = {
   build: {
     minify: process.env.NODE_ENV === 'production',
     minifyOption: {
-        html5: true,
-        collapseWhitespace: true,
-        minifyJS: true,
-        removeAttributeQuotes: true,
-    }
+      html5: true,
+      collapseWhitespace: true,
+      minifyJS: true,
+      removeAttributeQuotes: true,
+    },
+    copyStatic: true,
   }
 }
 
@@ -43,6 +44,13 @@ const DEFAULT_CONFIG = {
  * @property {Object} author
  * @property {string} [language]
  * @property {string} [copyright]
+ */
+
+ /**
+ * @typedef {Object} Build
+ * @property {boolean} [minify]
+ * @property {Object} [minifyOption]
+ * @property {boolean} [copyStatic]
  */
 
 /**
@@ -94,10 +102,16 @@ function mergeConfig(userConfig) {
  * @property {Config} config
  * @property {PostMeta[]} posts
  */
+
+ /**
+  * @param {Partial<Config>} userConfig
+  */
 async function mumimal(userConfig = {}) {
   const config = mergeConfig(userConfig)
 
-  await copyStatic()
+  if (config.build.copyStatic) {
+    await copyStatic()
+  }
   const posts = await parsePosts(config)
 
   /** @type {Context} */
