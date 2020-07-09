@@ -29,7 +29,9 @@ Your project structure should look like
 All files inside `static` would be copy to `dist`
 
 ### Index
-When rendering index, there are: `site` (site config) and `posts`(meta data of each posts)
+When rendering index, there are: `site` (site config) and
+- `site`: site config
+- `posts`: meta data of each posts
 
 For example, you can use them like
 ```ejs
@@ -48,7 +50,10 @@ For example, you can use them like
 ```
 
 ### Post
-When rendering index, there are: `meta` (meta data of this post) and `content`(html converted from markdown)
+When rendering index, there are:
+- `site`: site config
+- `meta`: meta data of this post
+- `content`: html converted from markdown
 
 For example, you can use them like
 ```ejs
@@ -71,6 +76,26 @@ tags: tag1 tag2
 ---
 
 Text content in [markdown](/markdown.html)
+```
+
+### Config
+Use `mumimal --config config.js` to apply custom config
+
+```js
+// example config.js
+const config = {
+  site: {
+    url: 'https://github.com/yourName/',
+    title: 'My Cool Blog'
+  },
+  feed: {
+    title: 'My Cool Blog',
+    description: 'This is an apple',
+    image: `https://somewhere.example.com/logo.png`,
+    categories: ["Tech", "Node.js"]
+  }
+}
+module.exports = { config }
 ```
 
 ## What is Mumi

@@ -44,10 +44,12 @@ function postTemplate() {
  */
 function writePost(meta, content, config) {
   const { postName } = meta
+  const { site } = config
   const template = postTemplate()
   let rendered = template({
     content,
     meta,
+    site,
   })
   if (config.build.minify) {
     rendered = minify(rendered, config.build.minifyOption)
