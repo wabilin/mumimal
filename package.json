@@ -1,6 +1,6 @@
 {
   "name": "mumimal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Mumimal is a mumi minimal blog generator.",
   "main": "index.js",
   "bin": {
@@ -18,11 +18,15 @@
     "marked": "^1.1.0",
     "yargs": "^15.4.0"
   },
-  "keywords": ["blog"],
+  "keywords": [
+    "blog"
+  ],
   "homepage": "https://github.com/wabilin/mumimal",
   "repository": {
     "type": "git",
     "url": "https://github.com/wabilin/mumimal.git"
   },
-  "engines" : { "node" : ">=14" }
+  "engines": {
+    "node": ">=14"
+  }
 }
