@@ -1,7 +1,7 @@
 const { Feed } = require('feed')
 const { JSDOM } = require('jsdom')
 const { readPostSrc } = require('./parsePosts')
-const { DIST_FEED_PATH } = require('./paths')
+const { DIST_FEED_PATH, DIST_RSS_PATH } = require('./paths')
 const { writeFile } = require('./file')
 
 /**
@@ -47,12 +47,17 @@ const { writeFile } = require('./file')
     });
   })
 
-  return writeAtom(feed)
+  return writeFeeds(feed)
 }
 
-function writeAtom(feed) {
+function writeFeeds(feed) {
   const feedAtom = feed.atom1()
-  return writeFile(DIST_FEED_PATH, feedAtom)
+  const feedRss = feed.rss2()
+
+  return Promise.all([
+    writeFile(DIST_FEED_PATH, feedAtom),
+    writeFile(DIST_RSS_PATH, feedRss),
+  ])
 }
 
 /**
