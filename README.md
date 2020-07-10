@@ -4,6 +4,8 @@
 
 > Mumi and minimal blog engine.
 
+Thin, fast and extendable.
+
 ## Install
 ```sh
 # use yarn
@@ -14,7 +16,18 @@ npm install mumimal
 ```
 
 ## Usage
-Run `mumimal` or `mumimal --config config.js`
+
+### Use command
+`mumimal` or `mumimal --config config.js`
+
+### Use module
+```js
+const { mumimal } = require('mumimal');
+const config = {
+  //...
+}
+mumimal(config).then(...)
+```
 
 Your project structure should look like
 ```
@@ -28,7 +41,9 @@ Your project structure should look like
 ├── dist/
 └── static/
 ```
-All files inside `static` would be copy to `dist`
+
+- All files inside `static` would be copy to `dist`.
+- Mumimal builds: index, posts, rss and sitemap.
 
 ### Index
 When rendering index, there are: `site` (site config) and
@@ -51,6 +66,11 @@ For example, you can use them like
 <% }) %>
 ```
 
+To read post content when building index:
+```ejs
+<% const { content } = funcs.readPostSrc(post.postName) %>
+```
+
 ### Post
 When rendering index, there are:
 - `site`: site config
@@ -64,6 +84,7 @@ For example, you can use them like
   <title>Site Name | <%= meta.title %></title>
 </head>
 <body>
+ <div class="tags"><%= meta.tags.join(', ') %></dib>
   <article>
     <%- content %>
   </article>
@@ -80,8 +101,8 @@ tags: tag1 tag2
 Text content in [markdown](/markdown.html)
 ```
 
-### Config
-Use `mumimal --config config.js` to apply custom config
+### Configuration
+Use `mumimal --config config.js` to apply custom config.
 
 ```js
 // example config.js
@@ -95,6 +116,13 @@ const config = {
     description: 'This is an apple',
     image: `https://somewhere.example.com/logo.png`,
     categories: ["Tech", "Node.js"]
+  },
+  build: {
+    minify: true,
+    minifyOptions: {},
+  }
+  afterBuild: (context) => {
+    console.log(context)
   }
 }
 module.exports = { config }
@@ -108,6 +136,3 @@ A characters of Battle Girl High School (バトガ).
 
 Her name is Michelle Watagi (綿木 ミシェル).
 But in Taiwan, we all call her Mumi.
-
-## TODO
-- [ ] get posts content in index
