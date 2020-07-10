@@ -45,20 +45,12 @@ jobs:
 
 workflows:
   version: 2
-  lint:
+  lint-publish:
     jobs:
       - lint
-  publish:
-    jobs:
-      - lint:
-          filters:
-            tags:
-              only: /^v.*/
       - deploy:
           requires:
             - lint
           filters:
             tags:
               only: /^v.*/
-            branches:
-              ignore: /.*/
