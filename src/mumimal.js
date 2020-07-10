@@ -1,23 +1,23 @@
-//@ts-check
+// @ts-check
 
-const { parsePosts } = require('./parsePosts')
-const { buildIndex } = require('./buildIndex')
-const { copyStatic } = require('./copyStatic')
-const { createFeed } = require('./createFeed')
-const { createSitemap } = require('./createSitemap')
+const { parsePosts } = require('./parsePosts');
+const { buildIndex } = require('./buildIndex');
+const { copyStatic } = require('./copyStatic');
+const { createFeed } = require('./createFeed');
+const { createSitemap } = require('./createSitemap');
 
 const DEFAULT_CONFIG = {
   site: {
-    title: "",
-    description: "",
-    url: "",
+    title: '',
+    description: '',
+    url: '',
   },
   ejsOption: {
   },
   feed: {
-    title: "",
-    description: "",
-    author: "",
+    title: '',
+    description: '',
+    author: '',
   },
   build: {
     minify: process.env.NODE_ENV === 'production',
@@ -28,8 +28,8 @@ const DEFAULT_CONFIG = {
       removeAttributeQuotes: true,
     },
     copyStatic: true,
-  }
-}
+  },
+};
 
 /**
  * @typedef {Object} Site
@@ -38,7 +38,7 @@ const DEFAULT_CONFIG = {
  * @property {string} url
  */
 
- /**
+/**
  * @typedef {Object} Feed
  * @property {string} title
  * @property {string} description
@@ -47,7 +47,7 @@ const DEFAULT_CONFIG = {
  * @property {string} [copyright]
  */
 
- /**
+/**
  * @typedef {Object} Build
  * @property {boolean} [minify]
  * @property {Object} [minifyOption]
@@ -76,26 +76,26 @@ function mergeConfig(userConfig) {
     ejsOption = {},
     feed = {},
     build = {},
-   } = userConfig
+  } = userConfig;
 
-   return {
-     site: {
-       ...DEFAULT_CONFIG.site,
-       ...site,
-     },
-     ejsOption: {
-       ...DEFAULT_CONFIG.ejsOption,
-       ...ejsOption,
-     },
-     feed: {
-       ...DEFAULT_CONFIG.feed,
-       ...feed,
-     },
-     build: {
-       ...DEFAULT_CONFIG.build,
-       ...build,
-     },
-   }
+  return {
+    site: {
+      ...DEFAULT_CONFIG.site,
+      ...site,
+    },
+    ejsOption: {
+      ...DEFAULT_CONFIG.ejsOption,
+      ...ejsOption,
+    },
+    feed: {
+      ...DEFAULT_CONFIG.feed,
+      ...feed,
+    },
+    build: {
+      ...DEFAULT_CONFIG.build,
+      ...build,
+    },
+  };
 }
 
 /**
@@ -104,26 +104,26 @@ function mergeConfig(userConfig) {
  * @property {PostMeta[]} posts
  */
 
- /**
+/**
   * @param {Partial<Config>} userConfig
   */
 async function mumimal(userConfig = {}) {
-  const config = mergeConfig(userConfig)
+  const config = mergeConfig(userConfig);
 
   if (config.build.copyStatic) {
-    await copyStatic()
+    await copyStatic();
   }
-  const posts = await parsePosts(config)
+  const posts = await parsePosts(config);
 
   /** @type {Context} */
-  const context = { config, posts }
-  await buildIndex(context)
+  const context = { config, posts };
+  await buildIndex(context);
 
-  await createFeed(context)
+  await createFeed(context);
 
-  return createSitemap(context)
+  return createSitemap(context);
 }
 
 module.exports = {
-  mumimal
-}
+  mumimal,
+};

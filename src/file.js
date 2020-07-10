@@ -1,5 +1,5 @@
-const fs = require('fs')
-const { exec } = require("child_process");
+const fs = require('fs');
+const { exec } = require('child_process');
 
 /**
  * @param {string} filePath
@@ -7,21 +7,21 @@ const { exec } = require("child_process");
  */
 function readFile(filePath) {
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, { encoding: "utf-8" }, (err, data) => {
+    fs.readFile(filePath, { encoding: 'utf-8' }, (err, data) => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve(data)
+        resolve(data);
       }
-    })
-  })
+    });
+  });
 }
 
 /**
  * @param {string} filePath
  */
 function readFileSync(filePath) {
-  return fs.readFileSync(filePath, { encoding: 'utf-8' })
+  return fs.readFileSync(filePath, { encoding: 'utf-8' });
 }
 
 /**
@@ -31,16 +31,15 @@ function readFileSync(filePath) {
  */
 function writeFile(filePath, content) {
   return new Promise((resolve, reject) => {
-    fs.writeFile(filePath, content, function (err) {
+    fs.writeFile(filePath, content, (err) => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve()
+        resolve();
       }
     });
-  })
+  });
 }
-
 
 /**
  * @param {string} dirPath
@@ -48,14 +47,14 @@ function writeFile(filePath, content) {
  */
 function readDir(dirPath) {
   return new Promise((resolve, reject) => {
-    fs.readdir(dirPath, function (err, files) {
+    fs.readdir(dirPath, (err, files) => {
       if (err) {
-        reject(err)
+        reject(err);
       } else {
-        resolve(files)
+        resolve(files);
       }
     });
-  })
+  });
 }
 
 /**
@@ -68,10 +67,10 @@ function mkdir(dirPath) {
       if (err) {
         reject(err);
       } else {
-        resolve()
+        resolve();
       }
     });
-  })
+  });
 }
 
 /**
@@ -82,19 +81,17 @@ function copyRecursive(src, dist) {
   return new Promise((resolve, reject) => {
     exec(`cp -r ${src} ${dist}`, (error, stdout, stderr) => {
       if (error) {
-        return reject(error)
+        return reject(error);
       }
 
       if (stderr) {
         return reject(stderr);
       }
 
-      if (!error && ! stderr) {
-        resolve(stdout)
-      }
+      return resolve(stdout);
     });
-  })
-};
+  });
+}
 
 module.exports = {
   copyRecursive,
@@ -103,4 +100,4 @@ module.exports = {
   writeFile,
   readDir,
   mkdir,
-}
+};

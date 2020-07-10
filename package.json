@@ -9,6 +9,9 @@
   "author": "wabilin",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "lint": "eslint ."
+  },
   "dependencies": {
     "ejs": "^3.1.3",
     "feed": "^4.2.0",
@@ -29,5 +32,10 @@
   },
   "engines": {
     "node": ">=14"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
   }
 }
