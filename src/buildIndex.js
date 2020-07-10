@@ -1,8 +1,9 @@
 // @ts-check
 
 const ejs = require('ejs');
-
 const { minify } = require('html-minifier-terser');
+const { readPostSrc } = require('./parsePosts');
+
 const { INDEX_LAYOUT_PATH, DIST_INDEX_PATH } = require('./paths');
 const { writeFile } = require('./file');
 
@@ -14,6 +15,9 @@ function buildIndex(context) {
   const data = {
     site,
     posts,
+    funcs: {
+      readPostSrc,
+    },
   };
 
   return new Promise((resolve, reject) => {
