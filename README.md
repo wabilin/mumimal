@@ -35,8 +35,8 @@ Your project structure should look like
 │   ├── index.ejs
 │   └── post.ejs
 ├── posts/
-│   ├── 2020-02-02-your-post-1.md
-│   └── 2020-03-24-your-post-2.md
+│   ├── 2020-02-02-my-post-1.md
+│   └── 2020-03-24-my-post-2.md
 ├── config.js
 ├── dist/
 └── static/
