@@ -45,6 +45,8 @@ Your project structure should look like
 - All files inside `static` would be copy to `dist`.
 - Mumimal builds: index, posts, rss and sitemap.
 
+See [example project](https://github.com/wabilin/wabilin.github.io).
+
 ### Index
 When rendering index, there are: `site` (site config) and
 - `site`: site config
