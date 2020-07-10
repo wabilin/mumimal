@@ -60,6 +60,7 @@ const DEFAULT_CONFIG = {
  * @property {Feed} feed
  * @property {Object} [ejsOption]
  * @property {Object} [build]
+ * @property {(context: Context) => Promise<void>} [afterBuild]
  */
 
 /**
@@ -121,7 +122,12 @@ async function mumimal(userConfig = {}) {
 
   await createFeed(context);
 
-  return createSitemap(context);
+  await createSitemap(context);
+
+  const { afterBuild } = config;
+  if (typeof afterBuild === 'function') {
+    return afterBuild(context);
+  }
 }
 
 module.exports = {
