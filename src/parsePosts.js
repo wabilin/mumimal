@@ -1,16 +1,20 @@
 const ejs = require('ejs');
-const marked = require('marked')
+const marked = require('marked');
 const matter = require('gray-matter');
 const { minify } = require('html-minifier-terser');
 
-const { readDir, mkdir, readFileSync, writeFile } = require('./file')
-const { POSTS_PATH, POST_LAYOUT_PATH, DIST_PATH, postSrcPath, postDistPath } = require('./paths')
+const {
+  readDir, mkdir, readFileSync, writeFile,
+} = require('./file');
+const {
+  POSTS_PATH, POST_LAYOUT_PATH, DIST_PATH, postSrcPath, postDistPath,
+} = require('./paths');
 
 const EJS_OPTIONS = {
-  rmWhitespace: true
-}
+  rmWhitespace: true,
+};
 
-let loadedPostTemplate = null
+let loadedPostTemplate = null;
 
 /**
  * @returns {ejs.AsyncTemplateFunction}
@@ -20,11 +24,11 @@ function postTemplate() {
     return loadedPostTemplate;
   }
 
-  const layout = readFileSync(POST_LAYOUT_PATH)
+  const layout = readFileSync(POST_LAYOUT_PATH);
 
   loadedPostTemplate = ejs.compile(layout, EJS_OPTIONS);
 
-  return loadedPostTemplate
+  return loadedPostTemplate;
 }
 
 /**
@@ -44,20 +48,20 @@ function postTemplate() {
  * @param {string} content
  */
 function writePost(meta, content, config) {
-  const { postName } = meta
-  const { site } = config
-  const template = postTemplate()
+  const { postName } = meta;
+  const { site } = config;
+  const template = postTemplate();
   let rendered = template({
     content,
     meta,
     site,
-  })
+  });
   if (config.build.minify) {
-    rendered = minify(rendered, config.build.minifyOption)
+    rendered = minify(rendered, config.build.minifyOption);
   }
 
-  const distPath = postDistPath(postName)
-  writeFile(distPath, rendered).catch(err => console.error(err))
+  const distPath = postDistPath(postName);
+  writeFile(distPath, rendered).catch((err) => console.error(err));
 }
 
 /**
@@ -67,35 +71,36 @@ function writePost(meta, content, config) {
  * @returns {PostMeta}
  */
 function buildMeta(postName, data) {
-  const tags = (data.tags || '').split(',').map(x => x.trim())
-  const link = postName.replace(/\.md$/, '.html')
+  const tags = (data.tags || '').split(',').map((x) => x.trim());
+  const link = postName.replace(/\.md$/, '.html');
 
   const meta = {
     ...data,
     tags,
     link,
     postName,
-  }
+  };
 
-  const dateMatch = postName.match(/^\d+-\d+-\d+/)
+  const dateMatch = postName.match(/^\d+-\d+-\d+/);
   if (dateMatch) {
-    meta.dateStr = dateMatch[0]
+    const [matchStr] = dateMatch;
+    meta.dateStr = matchStr;
   }
 
-  return meta
+  return meta;
 }
 
 /**
  * @param {string} postName
  */
 function readPostSrc(postName) {
-  const filePath = postSrcPath(postName)
+  const filePath = postSrcPath(postName);
 
-  const { data, content: mdContent } = matter.read(filePath)
-  const meta = buildMeta(postName, data)
-  const content = marked(mdContent)
+  const { data, content: mdContent } = matter.read(filePath);
+  const meta = buildMeta(postName, data);
+  const content = marked(mdContent);
 
-  return { meta, content }
+  return { meta, content };
 }
 
 /**
@@ -103,25 +108,25 @@ function readPostSrc(postName) {
  * @returns {Promise<PostMeta[]>} - all meta data
  */
 async function parsePosts(config) {
-  const filenames = await readDir(POSTS_PATH)
+  const filenames = await readDir(POSTS_PATH);
 
   const postNames = filenames
-    .filter(name => name.match(/.md$/))
-    .sort((a, b) => a.localeCompare(b) * -1)
+    .filter((name) => name.match(/.md$/))
+    .sort((a, b) => a.localeCompare(b) * -1);
 
-  await mkdir(DIST_PATH)
+  await mkdir(DIST_PATH);
 
-  const allMeta = []
-  postNames.forEach(postName => {
-    const { meta, content } = readPostSrc(postName)
-    writePost(meta, content, config)
-    allMeta.push(meta)
-  })
+  const allMeta = [];
+  postNames.forEach((postName) => {
+    const { meta, content } = readPostSrc(postName);
+    writePost(meta, content, config);
+    allMeta.push(meta);
+  });
 
-  return allMeta
+  return allMeta;
 }
 
 module.exports = {
   readPostSrc,
   parsePosts,
-}
+};

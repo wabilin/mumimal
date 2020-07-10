@@ -1,5 +1,5 @@
-const { mumimal } = require('./src/mumimal')
+const { mumimal } = require('./src/mumimal');
 
 module.exports = {
-  mumimal
-}
+  mumimal,
+};
