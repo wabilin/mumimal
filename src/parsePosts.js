@@ -32,7 +32,8 @@ function postTemplate() {
  * @property {string} title
  * @property {string} postName
  * @property {string[]} tags
- * @property {string} [dataStr]
+ * @property {string} link
+ * @property {string} [dateStr]
  */
 
 /**
