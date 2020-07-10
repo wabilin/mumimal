@@ -126,7 +126,7 @@ async function mumimal(userConfig = {}) {
 
   const { afterBuild } = config;
   if (typeof afterBuild === 'function') {
-    return afterBuild(context);
+    await afterBuild(context);
   }
 }
 
