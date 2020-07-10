@@ -28,29 +28,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      - persist_to_workspace:
-          root: ~/repo
-          paths: .
-  deploy:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
-      - run:
-          name: Publish package
-          command: yarn publish
-
 workflows:
   version: 2
-  lint-publish:
+  lint:
     jobs:
       - lint
-      - deploy:
-          requires:
-            - lint
-          filters:
-            tags:
-              only: /^v.*/
