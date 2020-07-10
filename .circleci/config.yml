@@ -45,10 +45,10 @@ workflows:
   version: 2
   test-deploy:
     jobs:
-      - test:
+      - lint
       - deploy:
           requires:
-            - test
+            - lint
           filters:
             tags:
               only: /^v.*/
