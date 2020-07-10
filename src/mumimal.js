@@ -4,6 +4,7 @@ const { parsePosts } = require('./parsePosts')
 const { buildIndex } = require('./buildIndex')
 const { copyStatic } = require('./copyStatic')
 const { createFeed } = require('./createFeed')
+const { createSitemap } = require('./createSitemap')
 
 const DEFAULT_CONFIG = {
   site: {
@@ -119,6 +120,8 @@ async function mumimal(userConfig = {}) {
   await buildIndex(context)
 
   await createFeed(context)
+
+  return createSitemap(context)
 }
 
 module.exports = {

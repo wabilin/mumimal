@@ -11,6 +11,7 @@ const DIST_PATH = path.join(PWD, 'dist')
 const DIST_INDEX_PATH = path.join(DIST_PATH, 'index.html')
 const DIST_FEED_PATH = path.join(DIST_PATH, 'feed.xml')
 const DIST_RSS_PATH = path.join(DIST_PATH, 'rss.xml')
+const DIST_SITEMAP_PATH = path.join(DIST_PATH, 'sitemap.xml')
 
 /**
  * @param {*} filename
@@ -38,6 +39,7 @@ module.exports = {
   DIST_INDEX_PATH,
   DIST_FEED_PATH,
   DIST_RSS_PATH,
+  DIST_SITEMAP_PATH,
   postSrcPath,
   postDistPath,
 }
