@@ -16,9 +16,11 @@ jobs:
           - v1-dependencies-{{ checksum "yarn.lock" }}
           - v1-dependencies-
 
-      - run: yarn
       - run:
-          name: Run tests
+          name: Install Packages
+          command: yarn
+      - run:
+          name: ESLint
           command: yarn lint
 
       - save_cache:
