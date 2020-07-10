@@ -1,6 +1,8 @@
 # Mumimal
 
-Mumi and minimal blog engine.
+[![CircleCI](https://circleci.com/gh/wabilin/mumimal.svg?style=shield)](https://circleci.com/gh/wabilin/mumimal)
+
+> Mumi and minimal blog engine.
 
 ## Install
 ```sh
