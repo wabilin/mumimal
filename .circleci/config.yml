@@ -45,9 +45,15 @@ jobs:
 
 workflows:
   version: 2
-  test-deploy:
+  lint:
     jobs:
       - lint
+  publish:
+    jobs:
+      - lint:
+          filters:
+            tags:
+              only: /^v.*/
       - deploy:
           requires:
             - lint
