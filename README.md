@@ -17,8 +17,17 @@ npm install mumimal
 
 ## Usage
 
-### Use command
-`mumimal` or `mumimal --config config.js`
+### CLI
+```sh
+# create post file
+mumimal --post "My new post title"
+
+# build blog
+mumimal
+
+# or, build with custom config
+mumimal --config config.js
+```
 
 ### Use module
 ```js
@@ -29,7 +38,9 @@ const config = {
 mumimal(config).then(...)
 ```
 
-Your project structure should look like
+### Blog Structure
+
+Project structure should look like
 ```
 ├── layouts/
 │   ├── index.ejs
