@@ -4,9 +4,9 @@
 const { argv } = require('yargs');
 const path = require('path');
 const { mumimal } = require('./src/mumimal');
+const { createPostMd } = require('./src/createPostMd');
 
-function getConfig() {
-  const configName = argv.config;
+function getConfig(configName) {
   if (!configName) {
     return {};
   }
@@ -17,9 +17,18 @@ function getConfig() {
   return config;
 }
 
-function mumi() {
-  const config = getConfig();
+function runMumimal(configName) {
+  const config = getConfig(configName);
   return mumimal(config);
+}
+
+function mumi() {
+  const { config, post } = argv;
+  if (post) {
+    return createPostMd(post);
+  }
+
+  return runMumimal(config);
 }
 
 mumi().catch((err) => {
