@@ -19,7 +19,7 @@
     "html-minifier-terser": "^5.1.1",
     "jsdom": "^16.2.2",
     "marked": "^2.0.0",
-    "sitemap": "^6.2.0",
+    "sitemap": "^7.0.0",
     "yargs": "^17.0.0"
   },
   "keywords": [
