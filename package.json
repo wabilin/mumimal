@@ -1,6 +1,6 @@
 {
   "name": "mumimal",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Mumimal is a mumi minimal blog generator.",
   "main": "index.js",
   "bin": {
